@@ -9,8 +9,15 @@ class Book(DjangoObjectType):
         model = BookModel
 
 
+class BookConnection(graphene.relay.Connection):
+    class Meta:
+        node = Book
+
+
 class Query(graphene.ObjectType):
-    books = graphene.List(Book)
+    books = graphene.relay.connection.IterableConnectionField(
+        BookConnection,
+    )
 
     @graphene.resolve_only_args
     def resolve_books(self):
