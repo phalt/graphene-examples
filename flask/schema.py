@@ -22,7 +22,12 @@ class CreateBook(graphene.Mutation):
     def mutate(self, info, name, author):
         # Do any logic for saving etc here
         # Return data at the end
-        return CreateBook(book=Book(name=name))
+        # save to db
+        book = Book(name=name)
+
+        return CreateBook(
+            book=book,
+        )
 
 
 class Query(graphene.ObjectType):
@@ -37,7 +42,9 @@ class Query(graphene.ObjectType):
 
     def resolve_books(self, info, name_contains):
         # Filter a collection here and return an array of ObjectTypes
-        return [Book(name=name_contains)]
+        return [
+            Book(name=name_contains),
+        ]
 
 class Mutations(graphene.ObjectType):
     create_book = CreateBook.Field()

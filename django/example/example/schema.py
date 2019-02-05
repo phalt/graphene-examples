@@ -19,8 +19,7 @@ class Query(graphene.ObjectType):
         BookConnection,
     )
 
-    @graphene.resolve_only_args
-    def resolve_books(self):
+    def resolve_books(self, info):
         return BookModel.objects.all()
 
 
